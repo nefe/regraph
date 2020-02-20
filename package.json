@@ -7,12 +7,15 @@
   "directories": {
     "test": "test"
   },
+  "homepage": "https://nefe.github.io/ReGraph/",
   "scripts": {
     "start": "npx rimraf _site && mkdir _site && cross-env NODE_ENV=development bisheng start -c ./bisheng.config.js",
     "site": "npx rimraf _build && mkdir _build && cross-env NODE_ENV=production bisheng build -c ./bisheng.config.js",
     "test": "rm -rf ./build && tsc && nyc --reporter=lcov --reporter=text --reporter=json ava && rm -rf .nyc_output",
     "prepublish": "tnpm run test && tnpm run scss",
-    "scss": "cp src/ReScreen/ReScreen.scss build/src/ReScreen/"
+    "scss": "cp src/ReScreen/ReScreen.scss build/src/ReScreen/",
+    "predeploy": "npm run site",
+    "deploy": "gh-pages -d _site"
   },
   "repository": {
     "type": "git",
@@ -51,6 +54,7 @@
     "enquire-js": "^0.2.1",
     "eslint-plugin-react-hooks": "^2.3.0",
     "file-loader": "^1.1.11",
+    "gh-pages": "^2.2.0",
     "jsonml-to-react-component": "^0.2.6",
     "jsonml.js": "^0.1.0",
     "less-loader": "^4.0.5",
