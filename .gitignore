@@ -5,4 +5,3 @@ coverage/
 *.log
 .awcache
 .vscode/
-_site

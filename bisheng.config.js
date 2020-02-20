@@ -55,24 +55,6 @@ module.exports = {
           link: '/api/index'
         }
       }
-      // introduce: {
-      //   title: 'ReGraph',
-      //   introduce: 'ReGraph是面向关系型数据的可视化库，主要包括层级关系数据（树）和网状关系数据（图）',
-      //   content: 'ReGraph分成三个部分，基础操作层(BaseGraph)、渲染交互层（ReScreen）以及布局算法层（BaseLayout）。',
-      //   more: {
-      //     label: '了解更多',
-      //     link: '/'
-      //   }
-      // },
-      // exhibition: {
-      //   title: 'ReGraph',
-      //   introduce: 'ReGraph是面向关系型数据的可视化库，主要包括层级关系数据（树）和网状关系数据（图）',
-      //   content: 'ReGraph分成三个部分，基础操作层(BaseGraph)、渲染交互层（ReScreen）以及布局算法层（BaseLayout）。',
-      //   more: {
-      //     label: '更多示例',
-      //     link: '/'
-      //   }
-      // }
     },
     header: {
       nav: [
