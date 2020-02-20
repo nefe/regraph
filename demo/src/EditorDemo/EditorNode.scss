@@ -1,0 +1,163 @@
+.EditorNode {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+
+ 
+
+  .rect-border {
+    border-color: #6ca0f5;
+  }
+
+  .polygon-border {
+    border-color: #65ca92;
+  }
+
+  .ellipse-border {
+    border-color: #c6aaa7;
+  }
+
+  .circle-border {
+    border-color: #b595d4;
+  }
+
+  .rect-bgColor {
+    background: #6ca0f5;
+  }
+
+  .polygon-bgColor {
+    background: #65ca92;
+  }
+
+  .ellipse-bgColor {
+    background: #c6aaa7;
+  }
+
+  .circle-bgColor {
+    background: #b595d4;
+  }
+
+  .rect-clicked {
+    border-color: #5084d8;
+  }
+
+  .polygon-clicked {
+    border-color: #3b9262;
+  }
+
+  .ellipse-clicked {
+    border-color: #906e6a;
+  }
+
+  .circle-clicked {
+    border-color: #8b66af;
+  }
+
+  .selected {
+    border-width: 3px;
+  }
+
+  .rect-parallel-clicked {
+    background: #5084d8;
+  }
+
+  .polygon-parallel-clicked {
+    background: #3b9262;
+  }
+
+  .ellipse-parallel-clicked {
+    background: #906e6a;
+  }
+
+  .circle-parallel-clicked {
+    background: #8b66af;
+  }
+
+  .dragging {
+    box-shadow: 1px 1px 10px 2px #d7d6db;
+  }
+
+  &-name {
+    color: #000;
+  }
+
+  &-mark {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    background: #ff7474;
+  }
+
+  &-box {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    border: 2px solid;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+
+    &-icon {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+
+      .one-icon {
+        font-size: 36px;
+        color: #52619b;
+      }
+    }
+
+    &-property {
+      display: flex;
+      flex-direction: column;
+      padding: 0 12px;
+    }
+
+    &-more {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 20px;
+      height: 16px;
+      line-height: 16px;
+      text-align: center;
+
+      a {
+        text-decoration: none;
+        color: #9b9b9b;
+      }
+    }
+
+    &-rightIcon {
+      width: 14px;
+      height: 14px;
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translate(50%, -50%);
+      border-radius: 7px;
+      background: #fff;
+
+      .one-icon {
+        font-size: 15px;
+        color: #52619b;
+        position: relative;
+        top: -3px;
+      }
+    }
+  }
+}
+
+.EditorNode-circle {
+  border-radius: 50%;
+}

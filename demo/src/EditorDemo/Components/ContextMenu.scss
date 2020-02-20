@@ -1,0 +1,95 @@
+.pipeline-portal {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: none;
+  overflow: hidden;
+  background-color: transparent;
+
+  > div {
+    display: none;
+  }
+
+  .contextMenu-layer {
+    // position: absolute;
+    width: 100%;
+    height: 100%;
+
+    .contextMenu {
+      position: absolute;
+      user-select: none;
+      width: 120px;
+
+      .ant-menu,
+      .ant-menu-sub {
+        padding: 6px 0;
+        background: #fff;
+        border-radius: 0;
+        box-shadow: 0 5px 11px 0 rgba(25, 14, 46, 0.09);
+
+        .ant-menu-submenu-title,
+        .ant-menu-item {
+          height: 36px;
+          margin: 0;
+          text-align: center;
+          line-height: 36px;
+        }
+
+        .ant-menu-submenu-vertical > .ant-menu-submenu-title .ant-menu-submenu-arrow {
+          width: 14px;
+          right: 10px;
+          color: #b2b2b2;
+        }
+
+        .ant-menu-item:hover,
+        .ant-menu-submenu-title:hover {
+          background: rgba(77, 86, 133, 0.1);
+        }
+
+        .ant-menu-item-selected,
+        .ant-menu-item-selected {
+          background-color: initial;
+          color: initial;
+        }
+      }
+    }
+  }
+}
+
+.pipeline-click-submenu {
+  .ant-menu {
+    width: 120px;
+    min-width: 120px;
+    padding: 6px 0;
+    background: #fff;
+    text-align: center;
+    border-radius: 0;
+    box-shadow: 0 5px 11px 0 rgba(25, 14, 46, 0.09);
+
+    .ant-menu-item-selected,
+    .ant-menu-item-selected {
+      background-color: initial;
+      color: initial;
+    }
+
+    .ant-menu-item {
+      height: 36px;
+      margin: 0;
+      line-height: 36px;
+      color: #4c4c4c;
+
+      &:hover {
+        color: #4c4c4c;
+        background: rgba(77, 86, 133, 0.1);
+      }
+
+      .one-icon {
+        color: #b2b2b2;
+        margin-left: 5px;
+      }
+    }
+  }
+}

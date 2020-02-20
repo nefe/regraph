@@ -1,0 +1,54 @@
+.toolbar {
+  display: flex;
+  justify-content: flex-start;
+  width: 180px;
+  height: 36px;
+  background: #fff;
+  line-height: 36px;
+  margin-left: 2px;
+  margin-bottom: 10px;
+  padding: 0 12px;
+  color: #333;
+
+  &-scale {
+    width: 40px;
+    margin-right: 5px;
+  }
+
+  &-button {
+    display: flex;
+    justify-content: flex-start;
+
+    > div {
+      width: 15px;
+      margin: 0 5px;
+      text-align: center;
+
+      .anticon {
+        color: rgba(0, 0, 0, 0.5);
+        cursor: pointer;
+      }
+
+      .icon-reduce {
+        margin-top: 7px;
+        font-size: 15px;
+      }
+    }
+
+    .icon-geshihuabuju {
+      font-size: 12px;
+      color: #999;
+      cursor: pointer;
+    }
+
+    .dpicon {
+      color: #999;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .icon-active {
+      color: #0994aa;
+    }
+  }
+}

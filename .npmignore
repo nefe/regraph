@@ -1,0 +1,9 @@
+node_modules/
+test/
+demo/
+coverage/
+.nyc_output
+*.log
+.awcache/
+.vscode/
+data/

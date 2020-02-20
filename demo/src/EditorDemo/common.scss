@@ -1,0 +1,12 @@
+$bgColor: #ebeaef;
+$borderColor: #d3d2d6;
+$textColor: #49494a;
+$withe: #fff;
+
+
+@mixin center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
