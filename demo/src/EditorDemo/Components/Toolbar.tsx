@@ -4,7 +4,7 @@
  */
 
 import * as React from 'react';
-import { Tooltip,Icon } from 'antd';
+import { Icon } from 'antd';
 import * as classNames from 'classnames';
 import { launchFullscreen, exitFullscreen, isFull } from '../utils/FullsreenUtils';
 import { MIN_SCALE, MAX_SCALE } from '../defines';
@@ -88,24 +88,19 @@ const Toolbar = React.forwardRef((props: ToolbarProps, ref: any) => {
   // 渲染按钮
   const renderButtons = () => {
     const fullScreenClassName = classNames({
-      dpicon: true,
-      'fullscreen': !fullscreenStatus,
-      'fullscreen-exit': fullscreenStatus,
+      fullscreen: !fullscreenStatus,
+      'fullscreen-exit': fullscreenStatus
     });
 
     return (
       <>
         {isZoom && (
           <>
-            <div className="enlarge">
-              <Tooltip placement="top" title={"放大"}>
-                <Icon type="plus" onClick={handleResize.bind(null, true)} />
-              </Tooltip>
+            <div className="toolbar-btn enlarge">
+              <Icon type="plus" onClick={handleResize.bind(null, true)} />
             </div>
-            <div className="reduce">
-              <Tooltip placement="top" title={"缩小"}>
-                <Icon type="minus" onClick={handleResize.bind(null, false)} />
-              </Tooltip>
+            <div className="toolbar-btn reduce">
+              <Icon type="minus" onClick={handleResize.bind(null, false)} />
             </div>
           </>
         )}
@@ -135,10 +130,8 @@ const Toolbar = React.forwardRef((props: ToolbarProps, ref: any) => {
           </div>
         )} */}
         {isFullScreen && (
-          <div className="fullScreen">
-            <Tooltip placement="top" title={"全屏"}>
-              <Icon type={fullScreenClassName} onClick={handleFullScreen} />
-            </Tooltip>
+          <div className="toolbar-btn fullScreen">
+            <Icon type={fullScreenClassName} onClick={handleFullScreen} />
           </div>
         )}
       </>

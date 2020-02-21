@@ -20,8 +20,8 @@ export const RIGHTDRAWER_WIDTH = 521;
 export const SHECHEDULE_RIGHTDRAWER_WIDTH = 750;
 
 // 支持缩放的最大值跟最小值
-export const MAX_SCALE = 400;
-export const MIN_SCALE = 10;
+export const MAX_SCALE = 200;
+export const MIN_SCALE = 50;
 
 // 组件之间的间距
 export const COMPONENT_DISTANCE = 30;

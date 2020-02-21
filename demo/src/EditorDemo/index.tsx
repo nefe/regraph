@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { Toolbar, NodePanel } from './Components';
-import NewCanvasContent from './CanvasContent';
+import CanvasContent from './CanvasContent';
 import { useEditorStore } from './Store/useEditorStore';
 import './index.scss';
 
 const { useState, useRef } = React;
 
 export default function EditorDemo(props) {
-  const [screenScale, changeScreenScale] = useState(0);
+  const [screenScale, changeScreenScale] = useState(100);
   const {
     nodes,
     links,
@@ -29,7 +29,8 @@ export default function EditorDemo(props) {
   const canvasRef = useRef({
     getWrappedInstance: () => Object
   } as any);
-  // const canvasInstance = canvasRef.current.getWrappedInstance();
+
+  const canvasInstance = canvasRef.current;
 
   /** 操作区 */
   const renderOperation = (
@@ -38,8 +39,9 @@ export default function EditorDemo(props) {
         ref={screenRef}
         screenScale={screenScale}
         changeScreenScale={changeScreenScale}
-        // handleResizeTo={canvasInstance && canvasInstance.handleResizeTo}
+        handleResizeTo={canvasInstance && canvasInstance.handleResizeTo}
         items={['fullscreen', 'zoom', 'adapt', 'format', 'ratio']}
+        layout={canvasInstance && canvasInstance.layout}
       />
     </div>
   );
@@ -50,8 +52,8 @@ export default function EditorDemo(props) {
 
   /** 渲染中间画布区 */
   const renderCanvas = (
-    <div className="editor-canvas" ref={screenRef}>
-      <NewCanvasContent
+    <div className="editor-canvas" >
+      <CanvasContent
         dragNode={dragNode}
         ref={canvasRef}
         nodes={nodes}
@@ -71,7 +73,7 @@ export default function EditorDemo(props) {
   const renderProperty = <div className="editor-property"></div>;
 
   return (
-    <div className="editor-demo">
+    <div className="editor-demo" ref={screenRef}>
       <div className="editor-operation">{renderOperation}</div>
       <div className="editor-container">
         {renderNodePanel}

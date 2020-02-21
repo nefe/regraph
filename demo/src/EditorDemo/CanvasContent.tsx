@@ -1,6 +1,5 @@
 /**
- * @file Editor demo
- * @author 剑决
+ * @file 处理画布内的操作
  */
 
 import * as React from 'react';
@@ -35,7 +34,7 @@ import { calcLinkPosition } from './utils/calc';
 // import ControlNav from './ControlNav';
 import { exitFullscreen, launchFullscreen, isFull, getOffset } from '../utils';
 
-class EditorProps {
+class CanvasContentProps {
   ref: any;
   nodes: Node[];
   links: Link[];
@@ -50,7 +49,7 @@ class EditorProps {
   updateNodes: (node: Node) => void;
 }
 
-class EditorState {
+class CanvasContentState {
   /** 拖拽节点 */
   isDraggingNode: boolean;
   /** 拖拽边 */
@@ -83,7 +82,7 @@ class EditorState {
   currentHoverNode: string;
 }
 
-export default class Editor extends React.Component<EditorProps, EditorState> {
+export default class CanvasContent extends React.Component<CanvasContentProps, CanvasContentState> {
   currTrans: ZoomTransform;
   nodesContainerRef: any;
   container: any;
@@ -128,20 +127,16 @@ export default class Editor extends React.Component<EditorProps, EditorState> {
   componentDidMount() {
     this.nodesContainerRef.current.addEventListener('mousedown', this.onNodesContainerMouseDown);
 
-    // this.container.current.addEventListener('mousemove', this.onNodesContainerMouseMove);
-
     this.container.current.addEventListener('click', this.onContainerMouseDown);
   }
 
   componentWillUnmount() {
     this.nodesContainerRef.current.removeEventListener('mousedown', this.onNodesContainerMouseDown);
 
-    // this.container.current.removeEventListener('mousemove', this.onNodesContainerMouseMove);
-
     this.container.current.removeEventListener('click', this.onContainerMouseDown);
   }
 
-  componentWillUpdate(nextProps: EditorProps, nextState: EditorState) {
+  componentWillUpdate(nextProps: CanvasContentProps, nextState: CanvasContentState) {
     if (this.state.isDraggingNode !== nextState.isDraggingNode) {
       this.toggleDragNode(nextState.isDraggingNode);
     }
@@ -534,91 +529,6 @@ export default class Editor extends React.Component<EditorProps, EditorState> {
     });
   };
 
-  /** 适应画布 */
-  // handleShowAll = (vertexes?) => {
-  //   const nodeList = vertexes || this.state.vertexes;
-
-  //   if (nodeList && nodeList.length === 0) {
-  //     return;
-  //   }
-
-  //   this.handleAdapt();
-  // };
-
-  /** 格式化画布 */
-  // layout = () => {
-  //   const { vertexes, edges } = this.state;
-
-  //   if (vertexes && vertexes.length === 0) {
-  //     return {
-  //       vertexes,
-  //       screen: {
-  //         k: 1,
-  //         x: 0,
-  //         y: 0
-  //       }
-  //     };
-  //   }
-
-  //   const datas = vertexes.map(component => {
-  //     const downRelations = edges
-  //       .filter(link => {
-  //         return link.v === component.id;
-  //       })
-  //       .map(link => {
-  //         return {
-  //           sourceId: link.u,
-  //           targetId: link.v
-  //         };
-  //       });
-  //     const upRelations = edges
-  //       .filter(link => {
-  //         return link.u === component.id;
-  //       })
-  //       .map(link => {
-  //         return {
-  //           sourceId: link.u,
-  //           targetId: link.v
-  //         };
-  //       });
-  //     return {
-  //       id: component.id,
-  //       downRelations,
-  //       upRelations
-  //     };
-  //   });
-
-  //   const dag = new BaseLayout.DAG({
-  //     isTransverse: true,
-  //     padding: 20,
-  //     margin: {
-  //       left: 0,
-  //       right: 0,
-  //       top: 0,
-  //       bottom: 0
-  //     },
-  //     defaultNodeWidth: VERTEX_HEIGHT,
-  //     defaultNodeHeight: VERTEX_HEIGHT
-  //   });
-
-  //   const { nodes } = dag.getMultiDAG(datas);
-
-  //   const newvertexes = vertexes.map(component => {
-  //     const node = _.find(nodes, n => n.id === component.id);
-
-  //     return {
-  //       ...component,
-  //       x: node.view.x,
-  //       y: node.view.y
-  //     };
-  //   });
-
-  //   this.setState({
-  //     vertexes: newvertexes
-  //   });
-  //   this.handleShowAll(newvertexes);
-  // };
-
   /** 处理全屏事件 */
   handleFullScreen = () => {
     const fullScreen = isFull();
@@ -644,6 +554,7 @@ export default class Editor extends React.Component<EditorProps, EditorState> {
       </div>
     );
   }
+
   /** 点击连线 */
   onSelectLink = (key: string) => {
     const { selectedLinks, setSelectedLinks } = this.props;
@@ -756,37 +667,24 @@ export default class Editor extends React.Component<EditorProps, EditorState> {
 
   render() {
     return (
-      <>
-        <div className="flow-container-top">
-          {/* <ControlNav
-            screenScale={screenScale}
-            changeScreenScale={operateEnable && this.changeScreenScale}
-            handleResizeTo={operateEnable && this.handleResizeTo}
-            handleShowAll={this.handleShowAll}
-            layout={operateEnable && this.layout}
-            handleFullScreen={this.handleFullScreen}
-            isFullScreen={isFull()}
-          /> */}
-        </div>
-        {/* {this.renderDragSource()} */}
-        <div className="canvas-container-content" ref={this.container}>
-          <ReScreen
-            type="DOM"
-            getScreenHandler={this.getScreenHandler}
-            needMinimap={true}
-            needRefresh={true}
-            mapPosition="RB-IN"
-            mapWidth={320}
-            mapHeight={120}
-            onScreenChange={this.getTransformInfo}
-            onDragOver={event => {
-              event.preventDefault();
-            }}
-            onDrop={this.onDrop.bind(this)}>
-            {this.renderCanvas()}
-          </ReScreen>
-        </div>
-      </>
+      <div className="canvas-container-content" ref={this.container}>
+        <ReScreen
+          type="DOM"
+          getScreenHandler={this.getScreenHandler}
+          needMinimap={true}
+          needRefresh={true}
+          zoomEnabled={false}
+          mapPosition="RB-IN"
+          mapWidth={320}
+          mapHeight={120}
+          onScreenChange={this.getTransformInfo}
+          onDragOver={event => {
+            event.preventDefault();
+          }}
+          onDrop={this.onDrop.bind(this)}>
+          {this.renderCanvas()}
+        </ReScreen>
+      </div>
     );
   }
 }
