@@ -1,6 +1,5 @@
 /**
  * @file 管道画布常量定义
- * @author 剑决(perkin.pj)
  */
 
 import * as React from 'react';
@@ -234,7 +233,6 @@ export function getContainer() {
 
 /**
  * @file 类型定义文件
- * @author 淡苍，剑决
  */
 class Vertex {
   id: string;
@@ -262,3 +260,21 @@ export const VERTEX_WIDTH = 180;
 export const VERTEX_HEIGHT = 32;
 
 export { Vertex, Edge, MenuType, MenuPos };
+
+// 操作类型
+export enum OperateType {
+  configuration = 'configuration',
+  copy = 'copy',
+  delete = 'delete',
+  parallelism = 'parallelism',
+  outputType = 'outputType',
+  mainOutput = 'mainOutput',
+  errorOutput = 'errorOutput',
+  dataMethod = 'dataMethod',
+  copyMethod = 'copyMethod',
+  distribute = 'distribute',
+  paste = 'paste',
+  deleteLink = 'deleteLink',
+  selectAll = 'selectAll',
+  dragSelect = 'dragSelect',
+}

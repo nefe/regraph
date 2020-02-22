@@ -1,6 +1,6 @@
 /**
  * @file 全屏工具类
- * @author 剑决(perkin.pj)
+ * @author perkinJ
  */
 
 /**

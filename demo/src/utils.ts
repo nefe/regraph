@@ -1,6 +1,6 @@
 /**
  * @file demo公共方法
- * @author 剑决
+ * @author perkinJ
  */
 
 /**

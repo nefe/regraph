@@ -1,6 +1,6 @@
 /**
  * @file 布局相关方法
- * @author 剑决
+ * @author perkinJ
  */
 
 export class Point {

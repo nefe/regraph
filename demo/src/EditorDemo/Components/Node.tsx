@@ -1,7 +1,7 @@
 /**
  * @file 通用节点组件
  * @desc 与画布联动，用于计算画布位置、缩放等
- * @author 剑决(perkin.pj)
+ * @author perkinJ
  */
 
 import * as React from 'react';
@@ -82,13 +82,18 @@ const Node = React.forwardRef((props: NodeProps, ref: any) => {
     event.stopPropagation();
     const container = containerRef.current.getBoundingClientRect();
     container.id = id;
-
     const { offsetTop, offsetLeft } = getOffset(container.current);
 
     // The position ⟨x,y⟩ is transformed to ⟨xk + tx,yk + ty⟩
+    const screenX = event.clientX - offsetLeft;
+    const screenY = event.clientY - offsetTop;
+
+    const newX = (screenX - x) / currTrans.k;
+    const newY = (screenY - y) / currTrans.k;
+
     const currentPos = {
-      left: offsetLeft + x * currTrans.k + currTrans.x,
-      top: offsetTop + y * currTrans.k + currTrans.y
+      left: newX,
+      top: newY
     };
 
     if (onContextMenu) {

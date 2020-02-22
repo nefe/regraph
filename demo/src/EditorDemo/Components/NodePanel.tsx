@@ -1,6 +1,6 @@
 /**
  * @file 画布侧边栏组件库面板
- * @author 剑决(perkin.pj)
+ * @author perkinJ
  */
 
 import * as React from 'react';

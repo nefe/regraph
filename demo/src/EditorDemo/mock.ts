@@ -30,11 +30,11 @@ export const mockData = {
   /**
    * 节点onwer
    */
-  owner: '剑决',
+  owner: 'perkinJ',
   /**
    * owner展示名
    */
-  ownerName: '剑决',
+  ownerName: 'perkinJ',
   /**
    * 节点创建时间
    */
@@ -47,7 +47,7 @@ export const mockData = {
   /**
    * 修改者展示名
    */
-  lastModifierName: '剑决',
+  lastModifierName: 'perkinJ',
   /**
    * 最后修改时间
    */

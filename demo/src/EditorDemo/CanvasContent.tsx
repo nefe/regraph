@@ -126,13 +126,13 @@ export default class CanvasContent extends React.Component<CanvasContentProps, C
 
   componentDidMount() {
     this.nodesContainerRef.current.addEventListener('mousedown', this.onNodesContainerMouseDown);
-
+    this.container.current.addEventListener('contextmenu', this.openContainerMenu);
     this.container.current.addEventListener('click', this.onContainerMouseDown);
   }
 
   componentWillUnmount() {
     this.nodesContainerRef.current.removeEventListener('mousedown', this.onNodesContainerMouseDown);
-
+    this.container.current.removeEventListener('contextmenu', this.openContainerMenu);
     this.container.current.removeEventListener('click', this.onContainerMouseDown);
   }
 
@@ -143,6 +143,11 @@ export default class CanvasContent extends React.Component<CanvasContentProps, C
     if (this.state.isDraggingLink !== nextState.isDraggingLink) {
       this.toggleDragLink(nextState.isDraggingLink);
     }
+  }
+
+  /** 打开全局操作菜单，包括复制，粘贴，删除等 */
+  openContainerMenu = (event: any) => {
+    event.preventDefault();
   }
 
   toggleDragNode = (isDraggingNode: Boolean) => {
@@ -608,28 +613,6 @@ export default class CanvasContent extends React.Component<CanvasContentProps, C
     updateNodes(newNode);
   };
 
-  renderDialog() {
-    const { menuDisplay, menuPos } = this.state;
-    return (
-      <div
-        className="flow-menu"
-        id={`flow-menu-${menuPos.id}`}
-        style={{ display: menuDisplay ? 'block' : 'none', left: menuPos.x, top: menuPos.y }}>
-        <a
-          id="flow-menu-item"
-          className="flow-menu-item"
-          href="javascript:void(0);"
-          onClick={
-            menuPos.type === 'vertex'
-              ? this.handleDeleteVertex.bind(this, menuPos.id)
-              : this.handleDeleteEdge.bind(this, menuPos.id)
-          }>
-          删除
-        </a>
-      </div>
-    );
-  }
-
   renderCanvas = () => {
     const { currentHoverNode } = this.state;
     const { nodes, links, selectedNodes, selectedLinks } = this.props;
@@ -649,6 +632,7 @@ export default class CanvasContent extends React.Component<CanvasContentProps, C
                 isSelected={isSelected}
                 showSelector={showSelector}
                 onResize={this.onResize.bind(this, child)}
+                currTrans={this.currTrans}
               />
             );
           })}

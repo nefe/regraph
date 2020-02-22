@@ -1,6 +1,6 @@
 /**
  * @file 公共类型定义文件
- * @author 剑决(perkin.pj)
+ * @author perkinJ
  */
 
 // 连接符

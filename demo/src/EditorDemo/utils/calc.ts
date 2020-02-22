@@ -1,6 +1,6 @@
 /**
  * @file 画布底层位置计算相关方法
- * @author 剑决(perkin.pj)
+ * @author perkinJ
  */
 
 import * as _ from 'lodash';

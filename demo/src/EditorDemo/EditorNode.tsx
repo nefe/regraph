@@ -1,25 +1,16 @@
 /**
  * @file 业务组件，基于Node的管道组件卡片
- * @author 剑决(perkin.pj)
+ * @author perkinJ
  */
 
 import * as React from 'react';
 import * as classNames from 'classnames';
 import * as _ from 'lodash';
-import find from 'lodash/find';
+import { Menu, Radio } from 'antd';
 import { Node as NodeContainer } from './Components';
-import { Tooltip, Icon } from 'antd';
-// import { PipelineContextMenu } from './PipelineContextMenu';
-import {
-  Node,
-  // OperateType,
-  // getMenuList,
-  // initPos,
-  NODE_WIDTH,
-  NODE_HEIGHT,
-  // COMPONENT_CATEGORY,
-  CONTEXT_HEIGHT_DIFF
-} from './defines';
+import { ContextMenu } from './ContextMenu';
+import { Node, OperateType } from './defines';
+import { useClickAway } from './Store/useClickAway';
 import './EditorNode.scss';
 
 const { useState, useRef, useMemo, useCallback } = React;
@@ -103,7 +94,18 @@ export function EditorNode(props: EditorNodeProps) {
   } = props;
   // 组件内状态，与业务无关
   const [menuShow, setMenuShow] = useState(false);
-  const [propertyBtnShow, setPropertyBtnShow] = useState(false);
+  const [menuPos, setMenuPos] = useState({ left: 0, top: 0 });
+
+  useClickAway(
+    () => {
+      setMenuShow(false);
+    },
+    () => document.querySelector('.EditorNode-box-menu'),
+    'contextmenu'
+  );
+  const menuRef = useClickAway(() => {
+    setMenuShow(false);
+  });
 
   const EditorNodeRef = useRef(null);
 
@@ -116,8 +118,8 @@ export function EditorNode(props: EditorNodeProps) {
     borderColor = `${currentNode.key}-border`;
   }
 
-   // 是否是圆形，TODO: 后续放开多边形
-   const isCircle = currentNode.key === 'circle';
+  // 是否是圆形，TODO: 后续放开多边形
+  const isCircle = currentNode.key === 'circle';
 
   const borderClass = classNames(
     'EditorNode-box',
@@ -128,24 +130,34 @@ export function EditorNode(props: EditorNodeProps) {
     { 'EditorNode-circle': isCircle }
   );
 
- 
+  const menuList = [
+    {
+      name: '删除',
+      key: OperateType.delete,
+      disabled: false
+    }
+  ];
 
-  // const onContextMenu = (position: { left: number; top: number }, event: React.MouseEvent<any>) => {
-  //   // 根据业务场景处理菜单的位置
-  //   const newPosition = {
-  //     left: position.left + NODE_WIDTH * currTrans.k + 5,
-  //     top: position.top + NODE_HEIGHT * currTrans.k + 25,
-  //   };
-  //   setPos(newPosition);
-  //   setMenuShow(true);
-  //   if (props.onContextMenu) {
-  //     props.onContextMenu(event);
-  //   }
-  // };
+  const onContextMenu = (position: { left: number; top: number }, event: React.MouseEvent<any>) => {
+    event.stopPropagation();
+    event.preventDefault();
+    // 根据业务场景处理菜单的位置
+    const newPosition = {
+      left: position.left,
+      top: position.top
+    };
+    setMenuPos(newPosition);
+    setMenuShow(true);
+    if (props.onContextMenu) {
+      props.onContextMenu(event);
+    }
+  };
 
   /** 点击菜单项 */
-  const handleClickMenu = (node: Node, { key }) => {
-    onSelect(node, key);
+  const handleClickMenu = ({ key }) => {
+    console.log('key', key);
+    // onSelect(currentNode, key);
+    setMenuShow(false);
   };
 
   /** 点击组件 */
@@ -170,36 +182,25 @@ export function EditorNode(props: EditorNodeProps) {
       isSelected={isSelected}
       onClick={handleClickNode}
       onResize={onResize}
-      // onContextMenu={interactive ? onContextMenu : null}
-    >
+      onContextMenu={interactive ? onContextMenu : null}>
       <div className="EditorNode" ref={EditorNodeRef}>
         <div className={borderClass}>
-          {/* <div className="EditorNode-box-icon">{icon}</div> */}
           <div className="EditorNode-box-property">
             <div className="EditorNode-name">{currentNode.name}</div>
           </div>
-          <div className="EditorNode-box-more">
-            {/* {interactive && (
-              <a href="javascript:void(0)" draggable={false} onClick={handleClickMore}>
-                ...
-              </a>
-            )} */}
-            {/* <PipelineContextMenu
-              id={id}
-              visible={menuShow}
-              onHide={() => {
-                setMenuShow(false);
-              }}
-              pos={pos}
-              onClick={handleClickMenu.bind(null, currentNode)}
-              menuList={menuList}
-              distribute={currentNode.distribute}
-              mainOutput={currentNode.mainOutput}
-            /> */}
+          <div className="EditorNode-box-menu" ref={menuRef}>
+            <ContextMenu type="vertex" id={currentNode.id} visible={menuShow} left={menuPos.left} top={menuPos.top}>
+              <Menu getPopupContainer={(triggerNode: any) => triggerNode.parentNode}>
+                {menuList.map(child => {
+                  return (
+                    <Menu.Item key={child.key} onClick={handleClickMenu}>
+                      {child.name}
+                    </Menu.Item>
+                  );
+                })}
+              </Menu>
+            </ContextMenu>
           </div>
-          {/* <div className="EditorNode-box-rightIcon" >
-              <Icon type="one-icon icon-zujianlianjieanniu anticon-dpicon" data-type="edge" />
-            </div> */}
         </div>
       </div>
     </NodeContainer>

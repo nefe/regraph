@@ -1,0 +1,46 @@
+.contextMenu-layer {
+  // position: absolute;
+  width: 100%;
+  height: 100%;
+
+  .contextMenu {
+    position: absolute;
+    user-select: none;
+    width: 120px;
+    z-index: 2;
+
+    .ant-menu,
+    .ant-menu-sub {
+      padding: 6px 0;
+      background: #fff;
+      border-radius: 0;
+      box-shadow: 0 5px 11px 0 rgba(25, 14, 46, 0.09);
+
+      .ant-menu-submenu-title,
+      .ant-menu-item {
+        height: 36px;
+        margin: 0;
+        text-align: center;
+        line-height: 36px;
+        list-style: none;
+      }
+
+      .ant-menu-submenu-vertical > .ant-menu-submenu-title .ant-menu-submenu-arrow {
+        width: 14px;
+        right: 10px;
+        color: #b2b2b2;
+      }
+
+      .ant-menu-item:hover,
+      .ant-menu-submenu-title:hover {
+        background: rgba(77, 86, 133, 0.1);
+      }
+
+      .ant-menu-item-selected,
+      .ant-menu-item-selected {
+        background-color: initial;
+        color: initial;
+      }
+    }
+  }
+}

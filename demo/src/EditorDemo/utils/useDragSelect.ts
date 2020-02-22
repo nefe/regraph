@@ -1,6 +1,6 @@
 /**
  * @file 圈选器逻辑处理，与视图分离
- * @author 剑决
+ * @author perkinJ
  */
 
 import * as React from 'react';

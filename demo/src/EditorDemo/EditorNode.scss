@@ -105,56 +105,6 @@
     height: 100%;
     background: #fff;
 
-    &-icon {
-      width: 36px;
-      height: 36px;
-      display: flex;
-      align-items: center;
-
-      .one-icon {
-        font-size: 36px;
-        color: #52619b;
-      }
-    }
-
-    &-property {
-      display: flex;
-      flex-direction: column;
-      padding: 0 12px;
-    }
-
-    &-more {
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      width: 20px;
-      height: 16px;
-      line-height: 16px;
-      text-align: center;
-
-      a {
-        text-decoration: none;
-        color: #9b9b9b;
-      }
-    }
-
-    &-rightIcon {
-      width: 14px;
-      height: 14px;
-      position: absolute;
-      right: 0;
-      top: 50%;
-      transform: translate(50%, -50%);
-      border-radius: 7px;
-      background: #fff;
-
-      .one-icon {
-        font-size: 15px;
-        color: #52619b;
-        position: relative;
-        top: -3px;
-      }
-    }
   }
 }
 

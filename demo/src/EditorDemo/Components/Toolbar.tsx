@@ -1,6 +1,6 @@
 /**
  * @file 画布操作导航
- * @author 剑决(perkin.pj)
+ * @author perkinJ
  */
 
 import * as React from 'react';

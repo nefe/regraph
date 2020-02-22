@@ -1,6 +1,6 @@
 /**
  * @file 节点，边搜索方法
- * @author 剑决
+ * @author perkinJ
  */
 
 import * as _ from 'lodash';

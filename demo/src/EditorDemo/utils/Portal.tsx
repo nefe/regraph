@@ -1,6 +1,6 @@
 /**
  * @file 使用hooks模拟React.Portal
- * @author 剑决(perkin.pj)
+ * @author perkinJ
  * @link https://www.jayfreestone.com/writing/react-portals-with-hooks/
  */
 

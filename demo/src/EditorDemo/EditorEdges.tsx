@@ -1,6 +1,6 @@
 /**
  * @file 通用边组件
- * @author 剑决
+ * @author perkinJ
  */
 
 import * as React from 'react';

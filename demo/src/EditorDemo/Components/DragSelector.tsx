@@ -1,6 +1,6 @@
 /**
  * @file 圈选器组件
- * @author 剑决(perkin.pj)
+ * @author perkinJ
  */
 
 import * as React from 'react';
