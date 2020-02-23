@@ -6,7 +6,7 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
 import * as _ from 'lodash';
-import { Menu, Radio } from 'antd';
+import { Menu } from 'antd';
 import { Node as NodeContainer } from './Components';
 import { ContextMenu } from './ContextMenu';
 import { Node, OperateType } from './defines';
@@ -100,14 +100,15 @@ export function EditorNode(props: EditorNodeProps) {
     () => {
       setMenuShow(false);
     },
-    () => document.querySelector('.EditorNode-box-menu'),
+    () => document.querySelector('.editorNode-box-menu'),
     'contextmenu'
   );
+  
   const menuRef = useClickAway(() => {
     setMenuShow(false);
   });
 
-  const EditorNodeRef = useRef(null);
+  const editorNodeRef = useRef(null);
 
   // const [pos, setPos] = useState(initPos);
   // 边框颜色
@@ -122,12 +123,12 @@ export function EditorNode(props: EditorNodeProps) {
   const isCircle = currentNode.key === 'circle';
 
   const borderClass = classNames(
-    'EditorNode-box',
+    'editorNode-box',
     borderColor,
     {
       dragging: isDragged
     },
-    { 'EditorNode-circle': isCircle }
+    { 'editorNode-circle': isCircle }
   );
 
   const menuList = [
@@ -155,8 +156,7 @@ export function EditorNode(props: EditorNodeProps) {
 
   /** 点击菜单项 */
   const handleClickMenu = ({ key }) => {
-    console.log('key', key);
-    // onSelect(currentNode, key);
+    onSelect(currentNode, key);
     setMenuShow(false);
   };
 
@@ -183,13 +183,13 @@ export function EditorNode(props: EditorNodeProps) {
       onClick={handleClickNode}
       onResize={onResize}
       onContextMenu={interactive ? onContextMenu : null}>
-      <div className="EditorNode" ref={EditorNodeRef}>
+      <div className="editorNode" ref={editorNodeRef}>
         <div className={borderClass}>
-          <div className="EditorNode-box-property">
-            <div className="EditorNode-name">{currentNode.name}</div>
+          <div className="editorNode-box-property">
+            <div className="editorNode-name">{currentNode.name}</div>
           </div>
-          <div className="EditorNode-box-menu" ref={menuRef}>
-            <ContextMenu type="vertex" id={currentNode.id} visible={menuShow} left={menuPos.left} top={menuPos.top}>
+          <div className="editorNode-box-menu" ref={menuRef}>
+            <ContextMenu id={currentNode.id} visible={menuShow} left={menuPos.left} top={menuPos.top}>
               <Menu getPopupContainer={(triggerNode: any) => triggerNode.parentNode}>
                 {menuList.map(child => {
                   return (

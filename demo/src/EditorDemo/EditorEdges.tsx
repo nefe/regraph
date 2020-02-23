@@ -102,7 +102,7 @@ export function EditorEdges(props: EditorEdgesProps) {
         path={pathData}
         lineAppendWidth={15}
         style={style}
-        // onContextMenu={interactive ? onContextMenu.bind(null, id) : null}
+        onContextMenu={interactive ? onContextMenu.bind(null, id) : null}
         onClick={interactive ? onSelectLink.bind(null, id) : null}
         endArrow={
           <marker

@@ -1,10 +1,13 @@
 import * as React from 'react';
+import * as _ from 'lodash';
+import * as uuid from 'uuid';
 import { Toolbar, NodePanel } from './Components';
 import CanvasContent from './CanvasContent';
 import { useEditorStore } from './Store/useEditorStore';
+import { useKeyPress } from './Store/useKeyPress';
 import './index.scss';
 
-const { useState, useRef } = React;
+const { useState, useRef, useEffect } = React;
 
 export default function EditorDemo(props) {
   const [screenScale, changeScreenScale] = useState(100);
@@ -19,7 +22,10 @@ export default function EditorDemo(props) {
     setDragNode,
     selectedNodes,
     setSelectedNodes,
-    updateNodes
+    updateNodes,
+    updateLinks,
+    copiedNodes,
+    setCopiedNodes
   } = useEditorStore();
 
   // 画布容器
@@ -31,6 +37,98 @@ export default function EditorDemo(props) {
   } as any);
 
   const canvasInstance = canvasRef.current;
+
+  /** 删除组件 */
+  const handleDeleteNodes = (ids: string[]) => {
+    if (!ids) {
+      return;
+    }
+    // 删除与组件相连的连线，不论上游或下游
+
+    const newLinks = _.cloneDeep(links);
+    ids.forEach(id => {
+      // 删除与节点连接的任意边
+      _.remove(newLinks, link => link.source === id || link.target === id);
+    });
+    // 更新连线
+    setLinks(newLinks);
+
+    // 剔除components
+    const cloneNodes = _.cloneDeep(nodes);
+    const newNodes = _.remove(cloneNodes, item => !ids.includes(item.id));
+
+    setNodes(newNodes);
+
+    // 清空高亮状态
+    setSelectedLinks([]);
+    setSelectedNodes([]);
+  };
+
+  /** 删除连线 */
+  const handleDeleteLinks = (activeLinks: string[]) => {
+    if (!activeLinks) {
+      return;
+    }
+    const linkList = links.map(link => link.id);
+    const diffLinks = _.difference(linkList, activeLinks);
+    const newLinks = diffLinks ? diffLinks.map(link => _.find(links, item => item.id === link)) : [];
+    setLinks(newLinks);
+  };
+
+  /** 复制节点 */
+  const handleNodesCopy = (ids: string[]) => {
+    const newCopiedNodes = ids.map(id => {
+      return _.find(nodes, item => item.id === id);
+    });
+
+    setCopiedNodes(newCopiedNodes);
+  };
+
+  /** 粘贴节点 */
+  const handleNodesPaste = () => {
+    if (copiedNodes) {
+      const currentCopied = copiedNodes.map(node => {
+        return {
+          ...node,
+          id: uuid.v4(),
+          /**  @todo 后续可优化布局算法 */
+          x: node.x + node.width + 20,
+          ref: React.createRef()
+        };
+      });
+      setCopiedNodes(currentCopied);
+      setNodes([...nodes, ...currentCopied]);
+    }
+  };
+
+  useKeyPress(
+    'delete',
+    () => {
+      if (selectedNodes) {
+        handleDeleteNodes(selectedNodes);
+      }
+      if (selectedLinks) {
+        handleDeleteLinks(selectedLinks);
+      }
+    },
+    {
+      events: ['keydown', 'keyup']
+    }
+  );
+
+  const isMac = navigator.platform.startsWith('Mac');
+
+  useKeyPress(isMac ? ['meta.c'] : ['ctrl.c'], () => {
+    if (selectedNodes) {
+      handleNodesCopy(selectedNodes);
+    }
+  });
+
+  useKeyPress(isMac ? ['meta.v'] : ['ctrl.v'], () => {
+    if (copiedNodes) {
+      handleNodesPaste();
+    }
+  });
 
   /** 操作区 */
   const renderOperation = (
@@ -46,13 +144,15 @@ export default function EditorDemo(props) {
     </div>
   );
   /** 渲染节点选择区 */
-  const renderNodePanel = <div className="editor-nodePanel">
-  <NodePanel onDrag={setDragNode} />
-</div>
+  const renderNodePanel = (
+    <div className="editor-nodePanel">
+      <NodePanel onDrag={setDragNode} />
+    </div>
+  );
 
   /** 渲染中间画布区 */
   const renderCanvas = (
-    <div className="editor-canvas" >
+    <div className="editor-canvas">
       <CanvasContent
         dragNode={dragNode}
         ref={canvasRef}
@@ -65,6 +165,11 @@ export default function EditorDemo(props) {
         selectedNodes={selectedNodes}
         setSelectedNodes={setSelectedNodes}
         updateNodes={updateNodes}
+        updateLinks={updateLinks}
+        deleteNodes={handleDeleteNodes}
+        deleteLinks={handleDeleteLinks}
+        copiedNodes={copiedNodes}
+        setCopiedNodes={setCopiedNodes}
       />
     </div>
   );

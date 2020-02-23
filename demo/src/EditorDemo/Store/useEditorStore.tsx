@@ -14,6 +14,8 @@ export function useEditorStore() {
   const [selectedNodes, setSelectedNodes] = useState<string[]>([]);
   const [dragNode, setDragNode] = useState(null);
 
+  const [copiedNodes, setCopiedNodes] = useState<Node[]>([]);
+
   useEffect(() => {
     setEditorData(mockData);
 
@@ -28,16 +30,16 @@ export function useEditorStore() {
     setLinks(_.get(mockData, 'hops'));
   }, []);
 
-  const updateNodes = node => {
+  const updateNodes = (node: Node) => {
     const index = _.findIndex(nodes, item => item.id === node.id);
 
     setNodes([...nodes.slice(0, index), node, ...nodes.slice(index + 1)]);
   };
 
-  const updateLinks = link => {
+  const updateLinks = (link: Link) => {
     const index = _.findIndex(links, item => item.id === link.id);
 
-    setNodes([...links.slice(0, index), link, ...links.slice(index + 1)]);
+    setLinks([...links.slice(0, index), link, ...links.slice(index + 1)]);
   };
 
   return {
@@ -54,6 +56,8 @@ export function useEditorStore() {
     selectedNodes,
     setSelectedNodes,
     dragNode,
-    setDragNode
+    setDragNode,
+    copiedNodes,
+    setCopiedNodes
   };
 }

@@ -5,23 +5,14 @@
 import * as React from 'react';
 import * as _ from 'lodash';
 import * as uuid from 'uuid';
-import { ReScreen } from '../../../src';
 import { ZoomTransform, zoomIdentity } from 'd3-zoom';
+import { Menu } from 'antd';
+import { ReScreen } from '../../../src';
 import { EditorNode } from './EditorNode';
 import { EditorEdges } from './EditorEdges';
 import { Point, distance, quadratic } from '../../../src/Utils/graph';
-import {
-  MenuType,
-  MenuPos,
-  CONNECTOR,
-  VERTEX_WIDTH,
-  VERTEX_HEIGHT,
-  Link,
-  Node,
-  NODE_WIDTH,
-  NODE_HEIGHT,
-  LINK_AREA
-} from './defines';
+import { ContextMenu } from './ContextMenu';
+import { MenuType, MenuPos, CONNECTOR, OperateType, Link, Node, NODE_WIDTH, NODE_HEIGHT, LINK_AREA } from './defines';
 import {
   findUpstreamNode,
   findAllUpstreamNodes,
@@ -31,7 +22,6 @@ import {
   findNearbyNode
 } from './utils/find';
 import { calcLinkPosition } from './utils/calc';
-// import ControlNav from './ControlNav';
 import { exitFullscreen, launchFullscreen, isFull, getOffset } from '../utils';
 
 class CanvasContentProps {
@@ -47,6 +37,11 @@ class CanvasContentProps {
   /** 当前拖拽的节点 */
   dragNode: Node;
   updateNodes: (node: Node) => void;
+  updateLinks: (link: Link) => void;
+  deleteNodes: (selectedNodes: string[]) => void;
+  deleteLinks: (selectedLinks: string[]) => void;
+  copiedNodes: Node[];
+  setCopiedNodes: (nodes: Node[]) => void;
 }
 
 class CanvasContentState {
@@ -80,6 +75,8 @@ class CanvasContentState {
   isKeyPressing: boolean;
   /** 当前鼠标悬浮的节点 */
   currentHoverNode: string;
+  /** 删除框 */
+  deleteVisible: boolean;
 }
 
 export default class CanvasContent extends React.Component<CanvasContentProps, CanvasContentState> {
@@ -109,13 +106,13 @@ export default class CanvasContent extends React.Component<CanvasContentProps, C
       menuDisplay: false,
       menuPos: {
         id: '',
-        type: 'vertex',
         x: 0,
         y: 0
       },
       screenScale: 100,
       sourcePos: '',
-      currentHoverNode: ''
+      currentHoverNode: '',
+      deleteVisible: false
     };
     this.nodesContainerRef = React.createRef();
     this.container = React.createRef();
@@ -148,7 +145,7 @@ export default class CanvasContent extends React.Component<CanvasContentProps, C
   /** 打开全局操作菜单，包括复制，粘贴，删除等 */
   openContainerMenu = (event: any) => {
     event.preventDefault();
-  }
+  };
 
   toggleDragNode = (isDraggingNode: Boolean) => {
     if (isDraggingNode) {
@@ -464,7 +461,6 @@ export default class CanvasContent extends React.Component<CanvasContentProps, C
       menuDisplay: true,
       menuPos: {
         id,
-        type,
         x: newX,
         y: newY
       }
@@ -491,40 +487,6 @@ export default class CanvasContent extends React.Component<CanvasContentProps, C
       }
     }
     return isNodeOrLink;
-  };
-
-  /** 删除节点 */
-  handleDeleteVertex = (id: string) => {
-    const { nodes, links } = this.props;
-    const index = _.findIndex(nodes, item => item.id === id);
-    if (index > -1) {
-      const newvertexes = [...nodes.slice(0, index), ...nodes.slice(index + 1)];
-      const newEdges = [];
-
-      links.map(item => {
-        if (item.source !== id && item.target !== id) {
-          newEdges.push(item);
-        }
-      });
-      this.setState({
-        // vertexes: newvertexes,
-        // edges: newEdges,
-        menuDisplay: false
-      });
-    }
-  };
-
-  /** 删除边 */
-  handleDeleteEdge = (id: string) => {
-    // const { props } = this.state;
-    // const index = _.findIndex(edges, link => `${_.get(link, 'u', '')}${CONNECTOR}${_.get(link, 'v', '')}` === id);
-    // if (index > -1) {
-    //   const newEdges = [...edges.slice(0, index), ...edges.slice(index + 1)];
-    //   this.setState({
-    //     edges: newEdges,
-    //     menuDisplay: false
-    //   });
-    // }
   };
 
   /** 改变缩放倍率 */
@@ -600,6 +562,38 @@ export default class CanvasContent extends React.Component<CanvasContentProps, C
     }
   };
 
+  /** 被连线的节点 */
+  onSelectNode = (currentNode: Node, key: OperateType) => {
+    const { selectedNodes, deleteNodes } = this.props;
+    if (key === OperateType.delete) {
+      // 删除组件以及删除连线
+      // 判断改节点是否在多选区域内
+      if (selectedNodes && selectedNodes.includes(currentNode.id)) {
+        deleteNodes(_.compact([...selectedNodes, currentNode.id]));
+      } else {
+        deleteNodes([currentNode.id]);
+      }
+    }
+  };
+
+  /** 右键连线 */
+  onContextMenuLink = (key: string, event: React.MouseEvent<SVGPathElement, MouseEvent>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    this.props.setSelectedLinks([key]);
+    // 清空高亮的组件
+    this.props.setSelectedNodes(null);
+
+    const currentPos = {
+      x: event.clientX,
+      y: event.clientY
+    };
+    this.setState({
+      deleteVisible: true,
+      menuPos: currentPos
+    });
+  };
+
   /** 伸缩节点 */
   onResize = (node: Node, width: number, height: number, x: number, y: number) => {
     const { updateNodes } = this.props;
@@ -633,6 +627,7 @@ export default class CanvasContent extends React.Component<CanvasContentProps, C
                 showSelector={showSelector}
                 onResize={this.onResize.bind(this, child)}
                 currTrans={this.currTrans}
+                onSelect={this.onSelectNode}
               />
             );
           })}
@@ -640,6 +635,7 @@ export default class CanvasContent extends React.Component<CanvasContentProps, C
             links={links}
             nodes={nodes}
             selectedLinks={selectedLinks}
+            onContextMenu={this.onContextMenuLink}
             onSelectLink={this.onSelectLink}
             isDraggingLink={this.state.isDraggingLink}
             dragLink={this.state.dragLink}
@@ -650,6 +646,7 @@ export default class CanvasContent extends React.Component<CanvasContentProps, C
   };
 
   render() {
+    const { deleteVisible, menuPos } = this.state;
     return (
       <div className="canvas-container-content" ref={this.container}>
         <ReScreen
@@ -668,6 +665,30 @@ export default class CanvasContent extends React.Component<CanvasContentProps, C
           onDrop={this.onDrop.bind(this)}>
           {this.renderCanvas()}
         </ReScreen>
+        {/** 删除连线的菜单 */}
+        <ContextMenu
+          visible={deleteVisible}
+          // onHide={() => {
+          //   this.props.setLinks(null);
+          //   this.setState({
+          //     deleteVisible: false
+          //   });
+          // }}
+          left={menuPos.x}
+          top={menuPos.y}
+          // onClick={this.handleDeleteLinks.bind(this, selectedLinks)}
+        >
+          <Menu getPopupContainer={(triggerNode: any) => triggerNode.parentNode}>
+            {[
+              {
+                name: '删除',
+                key: OperateType.delete
+              }
+            ].map(child => {
+              return <Menu.Item key={child.key}>{child.name}</Menu.Item>;
+            })}
+          </Menu>
+        </ContextMenu>
       </div>
     );
   }

@@ -249,8 +249,7 @@ class Edge {
 
 type MenuType = 'vertex' | 'edge';
 class MenuPos {
-  id: string;
-  type: MenuType;
+  id?: string;
   x: number;
   y: number;
 }

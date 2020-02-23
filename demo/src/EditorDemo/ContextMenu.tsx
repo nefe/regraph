@@ -3,8 +3,7 @@ import * as React from 'react';
 import './ContextMenu.scss';
 
 class ContextMenuProps {
-  id: string;
-  type: 'vertex' | 'edge';
+  id?: string;
   visible: boolean;
   left: number;
   top: number;
@@ -15,7 +14,7 @@ const ContextMenu: React.FC<ContextMenuProps> = (props: ContextMenuProps) => {
   const { id, visible, left, top, children } = props;
   return (
     <div
-      id={`context-menu-${id}`}
+      id={id ? `context-menu-${id}` : 'context-menu'}
       style={{ display: visible ? 'block' : 'none', left, top }}
       className="contextMenu-layer">
       <div className="contextMenu">{children}</div>
