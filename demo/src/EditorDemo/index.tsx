@@ -101,15 +101,42 @@ export default function EditorDemo(props) {
     }
   };
 
+  // 剪切
+  const handleShear = () => {
+    if (selectedNodes) {
+      handleNodesCopy(selectedNodes);
+      handleDeleteNodes(selectedNodes);
+    }
+  };
+
+  // 复制
+  const handleCopy = () => {
+    if (selectedNodes) {
+      handleNodesCopy(selectedNodes);
+    }
+  };
+
+  // 粘贴
+  const handlePaste = () => {
+    if (copiedNodes) {
+      handleNodesPaste();
+    }
+  };
+
+  // 删除
+  const handleDelete = () => {
+    if (selectedNodes) {
+      handleDeleteNodes(selectedNodes);
+    }
+    if (selectedLinks) {
+      handleDeleteLinks(selectedLinks);
+    }
+  };
+
   useKeyPress(
     'delete',
     () => {
-      if (selectedNodes) {
-        handleDeleteNodes(selectedNodes);
-      }
-      if (selectedLinks) {
-        handleDeleteLinks(selectedLinks);
-      }
+      handleDelete();
     },
     {
       events: ['keydown', 'keyup']
@@ -118,17 +145,19 @@ export default function EditorDemo(props) {
 
   const isMac = navigator.platform.startsWith('Mac');
 
+  useKeyPress(isMac ? ['meta.x'] : ['ctrl.x'], () => {
+    handleShear();
+  });
+
   useKeyPress(isMac ? ['meta.c'] : ['ctrl.c'], () => {
-    if (selectedNodes) {
-      handleNodesCopy(selectedNodes);
-    }
+    handleCopy();
   });
 
   useKeyPress(isMac ? ['meta.v'] : ['ctrl.v'], () => {
-    if (copiedNodes) {
-      handleNodesPaste();
-    }
+    handlePaste();
   });
+
+  
 
   /** 操作区 */
   const renderOperation = (
@@ -138,8 +167,12 @@ export default function EditorDemo(props) {
         screenScale={screenScale}
         changeScreenScale={changeScreenScale}
         handleResizeTo={canvasInstance && canvasInstance.handleResizeTo}
-        items={['fullscreen', 'zoom', 'adapt', 'format', 'ratio']}
+        items={['fullscreen', 'zoom', 'adapt', 'format', 'ratio', 'shear', 'copy', 'paste', 'delete']}
         layout={canvasInstance && canvasInstance.layout}
+        onCopy={handleCopy}
+        onPaste={handlePaste}
+        onDelete={handleDelete}
+        onShear={handleShear}
       />
     </div>
   );

@@ -86,6 +86,7 @@
           padding: 0 0 0 28px;
           display: flex;
           outline: none;
+          user-select: none;
 
           .arrow {
             line-height: 30px;

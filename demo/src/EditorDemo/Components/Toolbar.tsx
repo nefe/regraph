@@ -12,7 +12,7 @@ import './Toolbar.scss';
 
 /** 操作面板，支持全屏、缩放、自适应画布、格式化、显示比例 */
 
-export type Type = 'fullscreen' | 'zoom' | 'adapt' | 'format' | 'ratio';
+export type ToolbarType = 'fullscreen' | 'zoom' | 'adapt' | 'format' | 'ratio' | 'shear' | 'copy' | 'paste' | 'delete';
 
 export class ToolbarProps {
   /** 适应画布 */
@@ -30,14 +30,24 @@ export class ToolbarProps {
   /** 格式化布局 */
   layout?: () => void;
 
+  onShear?: () => void;
+
+  onCopy?: () => void;
+
+  onPaste?: () => void;
+
+  onDelete?: () => void;
+
   /** 处理全屏 */
   // handleFullScreen?: () => void;
   /** Toolbar选项 */
-  items?: Type[];
+  items?: ToolbarType[];
+
+  /**  */
 }
 
 const Toolbar = React.forwardRef((props: ToolbarProps, ref: any) => {
-  const { screenScale, changeScreenScale, handleResizeTo, items } = props;
+  const { screenScale, changeScreenScale, handleResizeTo, items, onShear, onCopy, onPaste, onDelete } = props;
   const scale = String(Math.round(screenScale));
 
   /** 是否支持全屏 */
@@ -52,6 +62,15 @@ const Toolbar = React.forwardRef((props: ToolbarProps, ref: any) => {
 
   /** 是否支持格式化 */
   const isFormat = items.includes('format');
+
+  /** 剪切 */
+  const isShear = items.includes('shear');
+  /** 是否支持复制 */
+  const isCopy = items.includes('copy');
+
+  const isPaste = items.includes('paste');
+
+  const isDelete = items.includes('delete');
 
   /** 当前是否是全屏状态 */
 
@@ -96,11 +115,11 @@ const Toolbar = React.forwardRef((props: ToolbarProps, ref: any) => {
       <>
         {isZoom && (
           <>
-            <div className="toolbar-btn enlarge">
-              <Icon type="plus" onClick={handleResize.bind(null, true)} />
+            <div className="toolbar-btn">
+              <Icon type="zoom-in" onClick={handleResize.bind(null, true)} />
             </div>
-            <div className="toolbar-btn reduce">
-              <Icon type="minus" onClick={handleResize.bind(null, false)} />
+            <div className="toolbar-btn">
+              <Icon type="zoom-out" onClick={handleResize.bind(null, false)} />
             </div>
           </>
         )}
@@ -130,8 +149,31 @@ const Toolbar = React.forwardRef((props: ToolbarProps, ref: any) => {
           </div>
         )} */}
         {isFullScreen && (
-          <div className="toolbar-btn fullScreen">
+          <div className="toolbar-btn">
             <Icon type={fullScreenClassName} onClick={handleFullScreen} />
+          </div>
+        )}
+
+        {isShear && (
+          <div className="toolbar-btn">
+            <Icon type="scissor" onClick={onShear} />
+          </div>
+        )}
+
+        {isCopy && (
+          <div className="toolbar-btn">
+            <Icon type="copy" onClick={onCopy} />
+          </div>
+        )}
+
+        {isPaste && (
+          <div className="toolbar-btn">
+            <Icon type="snippets" onClick={onPaste} />
+          </div>
+        )}
+        {isDelete && (
+          <div className="toolbar-btn">
+            <Icon type="delete" onClick={onDelete} />
           </div>
         )}
       </>
