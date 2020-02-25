@@ -1,5 +1,5 @@
 {
-  "name": "ReScreen-demo",
+  "name": "rescreen-demo",
   "version": "1.0.0",
   "description": "",
   "scripts": {
@@ -26,6 +26,7 @@
     "webpack-dev-server": "^2.4.5"
   },
   "dependencies": {
+    "@types/uuid": "^3.4.5",
     "awesome-typescript-loader": "^3.4.1",
     "classnames": "^2.2.6",
     "oui-dom-events": "^0.2.2",
@@ -33,9 +34,9 @@
     "react-dom": "16.8.0",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
-    "typescript": "^3.6.4",
-    "@types/uuid": "^3.4.5"
+    "regraph-next": "^0.0.1-beat4",
+    "typescript": "^3.6.4"
   },
   "author": "",
-  "license": "ISC"
+  "license": "MIT"
 }

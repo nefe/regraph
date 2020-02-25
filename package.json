@@ -1,9 +1,9 @@
 {
-  "name": "regraph",
-  "version": "0.0.1-beat1",
+  "name": "regraph-next",
+  "version": "0.0.1-beat4",
   "description": "ReGraph",
-  "main": "build/src/index.js",
-  "typings": "build/src/index.d.ts",
+  "main": "build/index.js",
+  "typings": "build/index.d.ts",
   "directories": {
     "test": "test"
   },
@@ -11,9 +11,9 @@
   "scripts": {
     "start": "npx rimraf _site && mkdir _site && cross-env NODE_ENV=development bisheng start -c ./bisheng.config.js",
     "site": "npx rimraf _site && mkdir _site && cross-env NODE_ENV=production bisheng build -c ./bisheng.config.js",
-    "test": "rm -rf ./build && tsc && nyc --reporter=lcov --reporter=text --reporter=json ava && rm -rf .nyc_output",
+    "test": "rm -rf ./build && tsc",
     "prepublish": "npm run test && npm run scss",
-    "scss": "cp src/ReScreen/ReScreen.scss build/src/ReScreen/",
+    "scss": "cp src/ReScreen/ReScreen.css build/ReScreen/",
     "predeploy": "npm run site",
     "deploy": "gh-pages -d _site"
   },

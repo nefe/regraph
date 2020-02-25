@@ -59,7 +59,7 @@ module.exports = {
     header: {
       nav: [
         { name: '案例', href: '/examples/', key: 'examples' },
-        { name: 'Demo', href: '/demo/baseGraph', key: 'demo' },
+        { name: 'Demo', href: '/demo/reScreen', key: 'demo' },
         { name: 'API', href: '/api/index', key: 'api' }
       ]
     },

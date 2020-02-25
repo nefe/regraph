@@ -1,0 +1,70 @@
+
+html, body, #main, .app { 
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+} 
+
+#main {
+  padding: 50px 80px;
+}
+
+.screen {
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.my-btn {
+
+  & > div {
+    padding: 10px 0;
+  }
+
+  button {
+    margin-right: 4px;
+  }
+}
+
+.dom-content {
+  position: relative;
+  div {
+    position: absolute;
+    width: 150px;
+    height: 250px;
+  }
+  .dom-div-1 {
+    left: 100px;
+    top: 10px; 
+    background: red;
+  }
+  .dom-div-2 { 
+    right: 10px;
+    bottom: 10px; 
+    background: purple;
+  }
+  .dom-div-3 { 
+    transform: translate(400px, 100px);
+    background: blue;
+  }
+}
+
+input {
+  width: 30px;
+  margin-right: 20px;
+}
+
+.status {
+  margin-bottom: 20px;
+} 
+
+button {
+  cursor: pointer;
+  background: #2ca6f5;
+  color: white;
+  font-size: 15px;
+  padding: 5px 10px;
+  border-radius: 4px;
+  outline: none;
+  border: none;
+}

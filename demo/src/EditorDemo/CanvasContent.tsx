@@ -5,12 +5,11 @@
 import * as React from 'react';
 import * as _ from 'lodash';
 import * as uuid from 'uuid';
+import { ReScreen, Utils } from 'regraph-next';
 import { ZoomTransform, zoomIdentity } from 'd3-zoom';
 import { Menu } from 'antd';
-import { ReScreen } from '../../../src';
 import { EditorNode } from './EditorNode';
 import { EditorEdges } from './EditorEdges';
-import { Point, distance, quadratic } from '../../../src/Utils/graph';
 import { ContextMenu } from './ContextMenu';
 import { MenuType, MenuPos, CONNECTOR, OperateType, Link, Node, NODE_WIDTH, NODE_HEIGHT, LINK_AREA } from './defines';
 import {
@@ -23,6 +22,8 @@ import {
 } from './utils/find';
 import { calcLinkPosition } from './utils/calc';
 import { exitFullscreen, launchFullscreen, isFull, getOffset } from '../utils';
+
+const { Point } = Utils;
 
 class CanvasContentProps {
   ref: any;
@@ -52,7 +53,7 @@ class CanvasContentState {
   /** 拖拽节点 */
   dragNode: Node;
   /** 鼠标位置在拖动节点的偏移量 */
-  dragNodeOffset: Point;
+  dragNodeOffset: any;
   /** 移动边 */
   dragLink: {
     /** 源起节点id */

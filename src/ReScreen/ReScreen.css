@@ -1,0 +1,54 @@
+.regraph {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  cursor: -webkit-grab;
+}
+
+svg,
+g,
+rect {
+  /** TODO 过渡效果，应该鼠标拖拽的时候不需要动画，而在画布大小发生变化的时候自适应过程要自然过渡 **/
+  /** transition: 0.1s all linear;**/
+}
+
+.screen {
+  display: flex;
+  /** TODO：有问题，不加可能会造成ER图的突变，加了会导致缩略图的宽度不正确 **/
+  width: 100%;
+}
+
+.map-ctrl {
+  position: relative;
+  border: 1px solid #e6e6e6;
+  transition: opacity 0.3s linear;
+  opacity: 1;
+  background: #fff;
+  overflow: hidden;
+}
+
+.map-ctrl .map-visible-rect {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  cursor: move;
+}
+
+.map-ctrl-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.map-ctrl-animation .map-visible-rect > g > rect {
+  transition: 0.3s all linear;
+}
+
+.screen :-webkit-full-screen {
+  width: 100vw !important;
+  height: 100vh !important;
+}
+
+.screen-animation > div > * {
+  transition: 0.3s all linear;
+}

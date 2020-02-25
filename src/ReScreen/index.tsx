@@ -5,7 +5,7 @@ import * as React from 'react';
 import { zoom, zoomIdentity, ZoomTransform, ZoomBehavior } from 'd3-zoom';
 import * as d3Select from 'd3-selection';
 import { isValidSVG, exitFullscreen, requestFullscreen, getContainerStyle, getMapStyle } from './utils';
-import './ReScreen.scss';
+import './ReScreen.css';
 import { Point } from '../Utils/graph';
 
 /** 缩略图留白 */
