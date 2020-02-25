@@ -1,4 +1,73 @@
 
+.examples-list > li a,
+.examples-list > li a img {
+  display: block;
+}
+.examples-list > li h3 {
+  line-height: 42px;
+  color: #666;
+  background: #fff;
+}
+.examples-list > li:hover {
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
+}
+.examples-details {
+  margin-bottom: 60px;
+}
+.examples-details-demo {
+  margin-bottom: 40px;
+}
+.examples-details .replay-button {
+  float: right;
+  margin: -85px 10px;
+  position: relative;
+  bottom: 0;
+  right: 0;
+}
+.examples-details > pre {
+  max-height: 600px;
+  overflow: auto;
+}
+.examples-details h3 {
+  margin: 1em 0 0.6em 0;
+}
+
+.edit-button {
+  font-size: 16px;
+  line-height: 12px;
+}
+.edit-button i:hover {
+  color: #1890ff;
+}
+
+.drawer {
+  -webkit-animation: AlphaTo 0.3s ease-out 0.3s;
+          animation: AlphaTo 0.3s ease-out 0.3s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+  opacity: 0;
+  transform: translateX(-40px);
+}
+@-webkit-keyframes AlphaTo {
+  to {
+    opacity: 1;
+    left: 0;
+    transform: translateX(0px);
+  }
+}
+@keyframes AlphaTo {
+  to {
+    opacity: 1;
+    left: 0;
+    transform: translateX(0px);
+  }
+}
+
+/* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
+/* stylelint-disable no-duplicate-selectors */
+/* stylelint-disable */
+/* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
 @media only screen and (max-width: 767.99px) {
   .index .header-wrapper .header {
     transform: none;

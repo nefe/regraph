@@ -70,6 +70,63 @@
 }
 
 
+.regraph {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  cursor: -webkit-grab;
+}
+
+svg,
+g,
+rect {
+  /** TODO 过渡效果，应该鼠标拖拽的时候不需要动画，而在画布大小发生变化的时候自适应过程要自然过渡 **/
+  /** transition: 0.1s all linear;**/
+}
+
+.screen {
+  display: flex;
+  /** TODO：有问题，不加可能会造成ER图的突变，加了会导致缩略图的宽度不正确 **/
+  width: 100%;
+}
+
+.map-ctrl {
+  position: relative;
+  border: 1px solid #e6e6e6;
+  transition: opacity 0.3s linear;
+  opacity: 1;
+  background: #fff;
+  overflow: hidden;
+}
+
+.map-ctrl .map-visible-rect {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  cursor: move;
+}
+
+.map-ctrl-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.map-ctrl-animation .map-visible-rect > g > rect {
+  transition: 0.3s all linear;
+}
+
+.screen :-webkit-full-screen {
+  width: 100vw !important;
+  height: 100vh !important;
+}
+
+.screen-animation > div > * {
+  transition: 0.3s all linear;
+}
+
+html,body,#main,.app{width:100%;height:100%;margin:0;padding:0}#main{padding:50px 80px}.screen{flex-direction:column;align-items:flex-end}.my-btn>div{padding:10px 0}.my-btn button{margin-right:4px}.dom-content{position:relative}.dom-content div{position:absolute;width:150px;height:250px}.dom-content .dom-div-1{left:100px;top:10px;background:red}.dom-content .dom-div-2{right:10px;bottom:10px;background:purple}.dom-content .dom-div-3{transform:translate(400px, 100px);background:blue}input{width:30px;margin-right:20px}.status{margin-bottom:20px}button{cursor:pointer;background:#2ca6f5;color:white;font-size:15px;padding:5px 10px;border-radius:4px;outline:none;border:none}
+
 /* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
 /* stylelint-disable no-duplicate-selectors */
 /* stylelint-disable */
@@ -13312,73 +13369,4 @@ footer.dark .bottom-bar {
 .examples-list > li:nth-child(2n) {
   margin-left: 10%;
 }
-.examples-list > li a,
-.examples-list > li a img {
-  display: block;
-}
-.examples-list > li h3 {
-  line-height: 42px;
-  color: #666;
-  background: #fff;
-}
-.examples-list > li:hover {
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
-  transform: translateY(-4px);
-}
-.examples-details {
-  margin-bottom: 60px;
-}
-.examples-details-demo {
-  margin-bottom: 40px;
-}
-.examples-details .replay-button {
-  float: right;
-  margin: -85px 10px;
-  position: relative;
-  bottom: 0;
-  right: 0;
-}
-.examples-details > pre {
-  max-height: 600px;
-  overflow: auto;
-}
-.examples-details h3 {
-  margin: 1em 0 0.6em 0;
-}
-
-.edit-button {
-  font-size: 16px;
-  line-height: 12px;
-}
-.edit-button i:hover {
-  color: #1890ff;
-}
-
-.drawer {
-  -webkit-animation: AlphaTo 0.3s ease-out 0.3s;
-          animation: AlphaTo 0.3s ease-out 0.3s;
-  -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
-  opacity: 0;
-  transform: translateX(-40px);
-}
-@-webkit-keyframes AlphaTo {
-  to {
-    opacity: 1;
-    left: 0;
-    transform: translateX(0px);
-  }
-}
-@keyframes AlphaTo {
-  to {
-    opacity: 1;
-    left: 0;
-    transform: translateX(0px);
-  }
-}
-
-/* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
-/* stylelint-disable no-duplicate-selectors */
-/* stylelint-disable */
-/* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
 
