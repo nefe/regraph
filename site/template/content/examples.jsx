@@ -43,7 +43,7 @@ class Examples extends React.Component {
         const link = item.meta.link;
         // const link = _link.replace(/(\/index\.md)/g, '');
         const title = item.meta.chinese || item.meta.english;
-        // console.log('link', _link, link);
+
         return (
           <li key={link}>
             <Link to={link}>

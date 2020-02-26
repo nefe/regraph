@@ -29,7 +29,7 @@ function alertBabelConfig(rules) {
 }
 
 module.exports = {
-  root: './',
+  root: '/regraph/',
   source: './docs',
   output: './_site',
   theme: './site',
@@ -37,10 +37,10 @@ module.exports = {
   devServerConfig: {},
   port: 4000,
   themeConfig: {
-    home: '/',
+    home: '/regraph/',
     source: 'docs',
     title: 'ReGraph',
-    repository: 'git@github.com:nefe/ReGraph.git',
+    repository: 'git@github.com:nefe/regraph.git',
     index: {
       banner: {
         title: 'ReGraph',
@@ -77,7 +77,7 @@ module.exports = {
     alertBabelConfig(config.module.rules);
     config.plugins.push(new CSSSplitWebpackPlugin({ size: 4000 }));
     config.resolve.alias = {
-      'ReGraph': path.join(process.cwd(), './'),
+      'ReGraph': path.join(process.cwd(), './src'),
       'react-router': 'react-router/umd/ReactRouter'
     };
     return config;

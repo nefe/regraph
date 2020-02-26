@@ -1,25 +1,25 @@
 {
   "name": "regraph-next",
-  "version": "0.0.1-beat4",
+  "version": "0.0.1-beta1",
   "description": "ReGraph",
   "main": "build/index.js",
   "typings": "build/index.d.ts",
   "directories": {
     "test": "test"
   },
-  "homepage": "https://nefe.github.io/ReGraph/",
+  "homepage": "https://nefe.github.io/regraph/",
   "scripts": {
     "start": "npx rimraf _site && mkdir _site && cross-env NODE_ENV=development bisheng start -c ./bisheng.config.js",
     "site": "npx rimraf _site && mkdir _site && cross-env NODE_ENV=production bisheng build -c ./bisheng.config.js",
     "test": "rm -rf ./build && tsc",
-    "prepublish": "npm run test && npm run scss",
-    "scss": "cp src/ReScreen/ReScreen.css build/ReScreen/",
+    "prepublish": "npm run test && npm run css",
+    "css": "cp src/ReScreen/ReScreen.css build/ReScreen/",
     "predeploy": "npm run site",
     "deploy": "gh-pages -d _site"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:nefe/ReGraph.git"
+    "url": "git@github.com:nefe/regraph.git"
   },
   "keywords": [
     "graph",

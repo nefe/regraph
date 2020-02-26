@@ -67,12 +67,13 @@ class Header extends React.Component {
     const { themeConfig } = this.props;
     const navToRender = themeConfig.header.nav.map(item => {
       const className = this.props.activeKey === item.key ? 'active' : '';
+
       if (item.open) {
         return (
           <li key={item.key}>
-            <a href={item.href} target="_blank">
+            <Link to={item.href} target="_blank">
               {item.name}
-            </a>
+            </Link>
           </li>
         );
       }
@@ -95,7 +96,7 @@ class Header extends React.Component {
         <div className={this.props.className}>
           <TweenOne className={`${this.props.className}-logo`} animation={{ opacity: 0, type: 'from' }}>
             <Link
-              to="/"
+              href="/regraph"
               key="logo"
               onClick={e => {
                 this.phoneClick(e, this.state.phoneOpen, '/', true);
