@@ -1,10 +1,10 @@
 ---
 order: 2
-chinese: ReScreen API
-english: ReScreen API
+chinese: ReScreen使用文档
+english: ReScreen document
 ---
 
-# ReScreen 组件说明
+# ReScreen
 
 ReScreen 组件统一封装了画布的操作和缩略图功能，支持对画布的全屏、复位、显示所有、重置、平移缩放等常见功能。
 
@@ -21,69 +21,55 @@ ReScreen 组件统一封装了画布的操作和缩略图功能，支持对画�
 - 支持缩略图的点击聚焦操作
 - 支持外部传入缩放比例控制
 
-## 1. 调用方法
+## 调用方法
 
 ```js
-import { ReScreen } from 'ReGraph';
+import { ReScreen } from 'regraph-next';
 
-<ReScreen>
+<ReScreen  
+  height = {500}
+  width = {500}
+  mapWidth = {200}
+  mapHeight = {200}
+  mapPosition = "RT-IN" >
   <svg>
     <g>
       <circle cx={0} cy={0} r={500} fill="yellow" />
+      <circle cx={cx} cy={cy} r={250} fill="red" /> 
     </g>
-  </svg>
-</ReScreen>;
+  </svg> 
+</ReScreen>
 ```
 
-## 2. Demo
+## API
 
-\${ReScreenDemo}
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- | --- |
+| type | 画布内容的类型 | 枚举值，可选值（`SVG` ,`DOM`) | SVG |
+| width | 组件整体的尺寸，支持传入百分数 | number/string | - | 
+| height | 组件整体的尺寸，支持传入百分数 | number/string | - | 
+| zoomEnabled | 是否启动鼠标滚动缩放画布 | boolean | true | 
+| focusEnabled | 是否启动聚焦功能，0表示不启动，1表示单击触发，2表示双击触发 | number | 0 | 
+| minZoom | 缩放范围，最小值 | number | - |
+| maxZoom | 缩放范围，最大值 | number | - |
+| dragDirection | `ALL`,`HOR`, `VER` | 拖拽方向的锁定 | `ALL` |
+| needMinimap | 是否需要缩略图 | boolean | true |
+| minimap | React.ReactElement<any> | 支持自定义传入缩略图组件 | - |
+| mapPosition | `RT`, `RB`, `LT`, `LB`,  `RT-IN`, `RB-IN`, `LT-IN`, `LB-IN` | 缩略图位置，右上角；-IN表示在画布的内部 | 默认为`RT` |
+| mapPadding | 缩略图和原图之间的大小 | number | 20| 
+| mapWidth | 缩略图大小 | number | 100px | 
+| mapHeight | 缩略图大小 | number | 100px | 
+| mapRectStyle | 缩略图矩形的样式 | object | - |
+| Buttons | 按钮组件 | React.ReactElement<any> | - |
+| needRefresh | 由于画布元素的变化而引起的视图变化 | boolean | - |
+| resetNeedRefresh | 通知外层重置needRefresh为false | function | - |
+| onScreenChange | 画布发生变化时的回调，对外暴露当前的缩放信息 | (transform: ZoomTransform) => void | - |
+| getScreenHandler | 对外暴露画布操作函数 | any | - |
 
-## 3. API
-
-```javascript
-    /** 画布内容的类型，默认为SVG */
-  type?: 'SVG' | 'DOM' | 'CANVAS';
-  /** 组件整体的尺寸，支持传入百分数 */
-  height?: number | string;
-  width?: number | string;
-  /** 是否启动鼠标滚动缩放画布，默认为true */
-  zoomEnabled?: boolean;
-  /** 是否启动聚焦功能，0表示不启动，1表示单击触发，2表示双击触发 */
-  focusEnabled?: number;
-  /** 缩放范围 */
-  minZoom?: number;
-  maxZoom?: number;
-  /** 拖拽方向的锁定，默认为ALL */
-  dragDirection?: 'ALL' | 'HOR' | 'VER';
-  /** 是否需要缩略图，默认为true */
-  needMinimap?: boolean;
-  /** 支持自定义传入缩略图组件 */
-  Minimap?: React.ReactElement<any>;
-  /** 缩略图位置，默认为RT，右上角；-IN表示在画布的内部 */
-  mapPosition?: 'RT' | 'RB' | 'LT' | 'LB' | 'RT-IN' | 'RB-IN' | 'LT-IN' | 'LB-IN';
-  /** 缩略图和原图之间的大小，默认为20 */
-  mapPadding?: number;
-  /** 缩略图大小，默认为100px */
-  mapWidth?: number;
-  mapHeight?: number;
-  /** 缩略图矩形的样式，svg语法 */
-  mapRectStyle?: object;
-  /** 按钮组件，如果不需要就不传 */
-  Buttons?: React.ReactElement<any>;
-  /** 由于画布元素的变化而引起的视图变化 */
-  needRefresh?: boolean;
-  /** 通知外层重置needRefresh为false */
-  resetNeedRefresh?: () => void;
-  /** 画布发生变化时的回调，对外暴露当前的缩放信息 */
-  onScreenChange?: (transform: ZoomTransform) => void;
-  /** 对外暴露画布操作函数 */
-  getScreenHandler?: any;
-```
-
-## 4、注意事项
+## 注意事项
 
 - SVG 元素请用 g 将元素包裹起来
+- 当前暂未支持Canvas
 - 自定义的按钮组件默认提供以下事件：
 
 ```javascript
@@ -98,5 +84,3 @@ class ButtonsProps {
   handleApplyTransform: (transform: any) => void;
 }
 ```
-
-所以，按钮组件可以调用这些现成的画布操作方法。

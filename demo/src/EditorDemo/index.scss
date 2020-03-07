@@ -34,6 +34,7 @@
       position: relative;
 
       .editor-view {
+        transform-origin: 0px 0px;
         .editor-view-content {
           position: absolute;
         }

@@ -22,7 +22,11 @@ export function distance(sourcePoint: Point, targetPoint: Point) {
  * @param targetPoint
  */
 export const quadratic = (sourcePoint: Point, targetPoint: Point): string => {
-  const centerX = (sourcePoint.x + targetPoint.x) / 2;
+  const ratio = detectZoom();
+  const sourceX = sourcePoint.x * ratio;
+  const targetX = targetPoint.x * ratio;
+
+  const centerX = (sourceX + targetX) / 2;
   const centerY = (sourcePoint.y + targetPoint.y) / 2;
   let tolerance = 30;
 
@@ -34,17 +38,17 @@ export const quadratic = (sourcePoint: Point, targetPoint: Point): string => {
 
   return [
     'M',
-    sourcePoint.x,
+    sourceX,
     sourcePoint.y,
     'Q',
     /** 横向与竖向有区别 */
-    sourcePoint.x + tolerance,
+    sourceX + tolerance,
     sourcePoint.y,
     centerX,
     centerY,
     'T',
-    targetPoint.x - 6,
-    targetPoint.y - 2
+    targetX - 6,
+    targetPoint.y - 2,
   ].join(' ');
 };
 
@@ -73,6 +77,34 @@ export function calcLinkPosition(node, position) {
     x,
     y
   };
+}
+
+/**
+ * 计算屏幕缩放比例
+ */
+export function detectZoom() {
+  let ratio = window.outerWidth / window.innerWidth;
+  const screen = window.screen;
+  const ua = navigator.userAgent.toLowerCase();
+
+  if (window.devicePixelRatio !== undefined) {
+    // 由于mac retina屏幕devicePixelRatio会扩大2倍，这里mac统一用window.outerWidth / window.innerWidth表示ratio
+    const isMac = /macintosh|mac os x/i.test(ua);
+
+    ratio = isMac ? window.outerWidth / window.innerWidth : window.devicePixelRatio;
+  } else if (ua.indexOf('msie') > -1) {
+    if ((screen as any).deviceXDPI && (screen as any).logicalXDPI) {
+      ratio = (screen as any).deviceXDPI / (screen as any).logicalXDPI;
+    }
+  } else if (window.outerWidth !== undefined && window.innerWidth !== undefined) {
+    ratio = window.outerWidth / window.innerWidth;
+  }
+
+  if (ratio) {
+    ratio = Math.round(ratio * 100) / 100;
+  }
+
+  return ratio;
 }
 
 /**
