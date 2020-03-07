@@ -42,9 +42,8 @@ import { ReScreen } from 'regraph-next';
 ```
 
 ## API
-
-| 参数 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- | --- |
+| 参数           | 说明     | 类型         | 默认值                                                                    |
+| -------------- | -------- | --------------- | ------------------------------------------------------------------------------ |
 | type | 画布内容的类型 | 枚举值，可选值（`SVG` ,`DOM`) | SVG |
 | width | 组件整体的尺寸，支持传入百分数 | number/string | - | 
 | height | 组件整体的尺寸，支持传入百分数 | number/string | - | 
@@ -56,7 +55,7 @@ import { ReScreen } from 'regraph-next';
 | needMinimap | 是否需要缩略图 | boolean | true |
 | minimap | React.ReactElement<any> | 支持自定义传入缩略图组件 | - |
 | mapPosition | `RT`, `RB`, `LT`, `LB`,  `RT-IN`, `RB-IN`, `LT-IN`, `LB-IN` | 缩略图位置，右上角；-IN表示在画布的内部 | 默认为`RT` |
-| mapPadding | 缩略图和原图之间的大小 | number | 20| 
+| mapPadding | 缩略图和原图之间的大小 | number | 20 | 
 | mapWidth | 缩略图大小 | number | 100px | 
 | mapHeight | 缩略图大小 | number | 100px | 
 | mapRectStyle | 缩略图矩形的样式 | object | - |
