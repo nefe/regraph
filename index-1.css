@@ -4109,14 +4109,12 @@ a.ant-btn-sm {
           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 .ant-table-filter-dropdown .ant-dropdown-menu {
+  max-height: calc(100vh - 130px);
+  overflow-x: hidden;
   border: 0;
   border-radius: 4px 4px 0 0;
   -webkit-box-shadow: none;
           box-shadow: none;
-}
-.ant-table-filter-dropdown .ant-dropdown-menu-without-submenu {
-  max-height: 400px;
-  overflow-x: hidden;
 }
 .ant-table-filter-dropdown .ant-dropdown-menu-item > label + span {
   padding-right: 0;
@@ -7756,6 +7754,9 @@ textarea.ant-input-number {
   content: '';
 }
 .ant-row::after {
+  clear: both;
+}
+.ant-row + .ant-row::before {
   clear: both;
 }
 .ant-row-flex {
