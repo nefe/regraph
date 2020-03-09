@@ -5468,7 +5468,7 @@ eslint@^5.16.0:
     import-fresh "^3.0.0"
     imurmurhash "^0.1.4"
     inquirer "^6.2.2"
-    js-yaml "^3.13.0"
+    js-yaml "^3.13.1"
     json-stable-stringify-without-jsonify "^1.0.1"
     levn "^0.3.0"
     lodash "^4.17.11"
@@ -7800,14 +7800,6 @@ js-tokens@^3.0.0, js-tokens@^3.0.2:
   version "4.0.0"
   resolved "https://registry.npmjs.org/js-tokens/-/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
   integrity sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==
-
-js-yaml@^3.10.0:
-  version "3.12.0"
-  resolved "http://registry.npm.alibaba-inc.com/js-yaml/download/js-yaml-3.12.0.tgz#eaed656ec8344f10f527c6bfa1b6e2244de167d1"
-  integrity sha1-6u1lbsg0TxD1J8a/obbiJE3hZ9E=
-  dependencies:
-    argparse "^1.0.7"
-    esprima "^4.0.0"
 
 js-yaml@^3.13.1:
   version "3.13.1"
@@ -13503,7 +13495,7 @@ supertap@^1.0.0:
   dependencies:
     arrify "^1.0.1"
     indent-string "^3.2.0"
-    js-yaml "^3.10.0"
+    js-yaml "^3.13.1"
     serialize-error "^2.1.0"
     strip-ansi "^4.0.0"
 
@@ -14828,7 +14820,7 @@ yaml-front-matter@^4.0.0:
   integrity sha1-EcN4xU6sMGGoLLr2k6abTkxE9IQ=
   dependencies:
     commander "1.0.0"
-    js-yaml "^3.10.0"
+    js-yaml "^3.13.1"
 
 yargs-parser@^10.0.0, yargs-parser@^10.1.0:
   version "10.1.0"
