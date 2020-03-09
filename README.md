@@ -69,10 +69,75 @@ import { ReScreen } from 'regraph-next';
 | getScreenHandler | 对外暴露画布操作函数 | any | - |
 
 
-### BaseGraph
+## BaseGraph
 
-完善中，敬请期待
+BaseGraph 以树、图为基础数据结构，规范数据定义并提供基础操作库。
 
-### ReLayout
+### 功能
 
-完善中，敬请期待
+#### 树
+
+- 插入/删除/替换/查找节点/子树
+- 插入/删除/替换/查找边
+- 获取父节点/子节点/子孙节点/兄弟（层级结构/扁平结构/排序规则）
+- 获取两个子节点的相同父节点
+- 获取子节点到  任意节点（跟节点）的路径
+
+#### 图
+
+- 插入/删除/替换/查找节点
+- 插入/删除/替换/查找边
+- 获取父节点/子节点/子孙节点/兄弟（层级结构/扁平结构/排序规则）
+- 获取两个子节点的相同父节点
+- 获取子节点到任意节点（跟节点）的路径
+
+更多详细[BaseGraph API](https://github.com/nefe/regraph/blob/master/docs/api/BaseGraph.md)
+
+## BaseLayout
+
+BaseLayout 主要处理树图布局集成
+
+### 使用方式
+
+```ts
+import { OneLayout } from '@ali/one-graph';
+const { DAGAIU } = OneLayout;
+interface MyRelation {
+  sourceId: number;
+  targetId: number;
+  periodDiff: number;
+}
+interface MyNode {
+  id: number;
+  downRelations: MyRelation[];
+  upRelations: MyRelation[];
+  name: string;
+  desc: string;
+  nodeWidth?: number;
+  nodeHeight?: number;
+}
+// 生成dag图
+const dag = new DAGAIU<MyNode, MyRelation>({
+  isTransverse: true,
+  padding: 20,
+});
+```
+
+- 生成单个DAG
+
+```ts
+dag.getSingleDAG(data)
+```
+
+- 生成多个DAG
+
+```ts
+dag.getMultiDAG(data)
+```
+
+- 带组的图布局
+
+```ts
+this.groupLayout = new GroupGraphLayout(nodes, links, groups, groupLinks, config);
+this.groupLayout.layout();
+```
