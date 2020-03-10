@@ -100,8 +100,8 @@ BaseLayout 主要处理树图布局集成
 ### 使用方式
 
 ```ts
-import { OneLayout } from '@ali/one-graph';
-const { DAGAIU } = OneLayout;
+import { ReLayout } from 'regraph-next';
+const { DAGAIU } = ReLayout;
 interface MyRelation {
   sourceId: number;
   targetId: number;
