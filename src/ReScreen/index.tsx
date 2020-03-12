@@ -494,6 +494,7 @@ export default class ReScreen extends React.Component<Props, State> {
 
   /** 按钮事件，显示所有操作，@Todo 有点奇怪，计划下线 */
   handleShowAll = () => {
+    console.warn('handleShowAll 计划下线，适应画布请添加 contentRange 使用 handleAdapt 方法');
     const { mapWidth, mapHeight } = this.props;
     const { screenToMapTransform } = this.state;
     const scale =

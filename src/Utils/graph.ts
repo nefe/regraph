@@ -56,7 +56,7 @@ export const distance = (p1: Point, p2: Point): number => {
  * @param from 起点坐标
  * @param to 终点坐标
  */
-export const getControlPoint = (from: Point, to: Point, ratio: number): Point => {
+export const getControlPoint = (from: Point, to: Point, ratio: number, direct = 1): Point => {
   const { x: x1, y: y1 } = from;
   const { x: x2, y: y2 } = to;
   // 中点的横坐标
@@ -91,8 +91,8 @@ export const getControlPoint = (from: Point, to: Point, ratio: number): Point =>
   const deltaX = -Math.sign(normalSlope) * delta / Math.sqrt(1 + Math.pow(normalSlope, 2));
 
   return {
-    x: midX + deltaX,
-    y: midY + normalSlope * deltaX,
+    x: midX + direct * deltaX,
+    y: midY + direct * normalSlope * deltaX
   };
 };
 
