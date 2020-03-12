@@ -1,5 +1,5 @@
 import ReScreen from './ReScreen'; 
-import { DAGAIU as DAG, GraphLayout, GroupGraphLayout } from './BaseLayout';
+import { DAGAIU as DAG, GraphLayout, GroupGraphLayout,Bubble } from './BaseLayout';
 import Tree from './BaseGraph/Tree';
 import Graph from './BaseGraph/Graph';
 import { Point, crossProduct, crossPoint, isCross, distance, getControlPoint, quadratic, vectorAngle } from './Utils/graph';
@@ -19,6 +19,7 @@ const BaseLayout = {
   DAG,
   GraphLayout,
   GroupGraphLayout,
+  Bubble,
 };
 
 const BaseGraph = {
