@@ -48,7 +48,7 @@ module.exports = {
         content: 'ReGraph分成三个部分，基础操作层(BaseGraph)、渲染交互层（ReScreen）以及布局算法层（BaseLayout）。',
         more: {
           label: '了解更多',
-          link: '/examples/'
+          link: '/api/index'
         },
         quickStart: {
           label: '快速开始',
@@ -58,7 +58,7 @@ module.exports = {
     },
     header: {
       nav: [
-        { name: '案例', href: '/examples/', key: 'examples' },
+        { name: '案例', href: 'https://nefe.github.io/regraph-demo', key: 'examples', open: true },
         { name: 'Demo', href: '/demo/reScreen', key: 'demo' },
         { name: 'API', href: '/api/index', key: 'api' }
       ]

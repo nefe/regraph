@@ -67,13 +67,12 @@ class Header extends React.Component {
     const { themeConfig } = this.props;
     const navToRender = themeConfig.header.nav.map(item => {
       const className = this.props.activeKey === item.key ? 'active' : '';
-
       if (item.open) {
         return (
           <li key={item.key}>
-            <Link to={item.href} target="_blank">
+            <a href={item.href} target="_blank">
               {item.name}
-            </Link>
+            </a>
           </li>
         );
       }

@@ -1,6 +1,5 @@
 /**
  * @flie 全局统一类型
- * @author dancang.hj
  */
 
 export interface BaseVertex {
